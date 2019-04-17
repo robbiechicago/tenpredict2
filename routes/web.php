@@ -23,6 +23,7 @@ Route::get('game/{game}', 'GameController@show');
 Route::resource('forum', 'ForumController');
 Route::resource('league', 'LeagueController');
 Route::resource('poll', 'PollController');
+Route::resource('sudden_death', 'SuddenDeathController');
 
 
 //pages
