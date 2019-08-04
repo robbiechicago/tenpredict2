@@ -40,11 +40,15 @@ class HomeController extends Controller
         $user_id = Auth::user()->id;
         // $user_id = 10;
 
+        $season_id = Season::where('current',1)->value('id');
+
         $weeks = Week::with(['games.predictions' => function($query) {
             $user_id = Auth::user()->id; //dont think this can be removed, despite the duplication (scope)
             // $user_id = 10;
             $query->where('predictions.user_id', $user_id);
-        }])->whereHas('games')->orderBy('play_week_num', 'DESC')->get();
+        }])->where('season_id', $season_id)->whereHas('games')->orderBy('play_week_num', 'DESC')->get();
+
+        // return $weeks;
 
         $num_predictions = array();
         $last_game_datetimes = array();
