@@ -15,9 +15,9 @@
 
         <div class="row">
             <div class="col-sm-8">
-                <div class="row data-box-container d-none d-sm-flex">
+                {{-- <div class="row data-box-container d-none d-sm-flex">
                     @include('partials.partial_home_data_boxes')
-                </div>
+                </div> --}}
 
                 @if ($poll)
                     <div class="row d-sm-none">
@@ -39,13 +39,13 @@
                     </div>
                 @endif
 
-                <div class="row">
+                {{-- <div class="row">
                     @include('partials.partial_home_sb_league_table')
-                </div>
+                </div> --}}
 
-                <div class="row">
+                {{-- <div class="row">
                     @include('partials.partial_home_sb_week_table')
-                </div>
+                </div> --}}
 
             </div>
 
