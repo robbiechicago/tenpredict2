@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Week extends Model
 {
     public function season() {
-        return $this->belongsTo(Season::class);
+        return $this->belongsTo('App\Season', 'season_id', 'id');
     }
 
     public function games() {
