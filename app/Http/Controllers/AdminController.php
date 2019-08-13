@@ -9,6 +9,7 @@ use App\Prediction;
 use App\Game;
 use App\User;
 use App\Weeklyscores;
+use App\Week;
 use Auth;
 
 class AdminController extends Controller
@@ -25,6 +26,7 @@ class AdminController extends Controller
         }
 
         $seasons = Season::with('weeks.games.predictions')
+                         ->where('current', 1)
                          ->orderBy('season', 'DESC')
                          ->get();
         
@@ -167,8 +169,7 @@ class AdminController extends Controller
                                 $weekly_scores['pts_bet_res'] += $pred->result_points;
                                 $weekly_scores['pts_bet_scr'] += $pred->score_points;
                                 $weekly_scores['tot_pts_bet'] += ($pred->result_points + $pred->score_points);
-                                $calc_pred = $this->calc_pred($pred->home_goals, $pred->away_goals, $pred->result_points, $pred->score_points, $game->final_home, 
-                                $game->final_away);
+                                $calc_pred = $this->calc_pred($pred->home_goals, $pred->away_goals, $pred->result_points, $pred->score_points, $game->final_home, $game->final_away);
                             }
                         } 
                     }

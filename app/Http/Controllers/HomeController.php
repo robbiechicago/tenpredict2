@@ -40,11 +40,15 @@ class HomeController extends Controller
         $user_id = Auth::user()->id;
         // $user_id = 10;
 
+        $season_id = Season::where('current',1)->value('id');
+
         $weeks = Week::with(['games.predictions' => function($query) {
             $user_id = Auth::user()->id; //dont think this can be removed, despite the duplication (scope)
             // $user_id = 10;
             $query->where('predictions.user_id', $user_id);
-        }])->whereHas('games')->orderBy('play_week_num', 'DESC')->get();
+        }])->where('season_id', $season_id)->whereHas('games')->orderBy('play_week_num', 'DESC')->get();
+
+        // return $weeks;
 
         $num_predictions = array();
         $last_game_datetimes = array();
@@ -123,6 +127,8 @@ class HomeController extends Controller
         $best_rank = Weeklyscores::where('user_id', $user_id)->where('active', 1)->min('rank');
         $best_rank_weeks = Weeklyscores::from('weekly_scores AS ws')
                                        ->join('weeks AS w', 'w.id', '=', 'ws.week_id')
+                                       ->join('seasons AS s', 's.id', '=', 'w.season_id')
+                                       ->where('s.current', 1)
                                        ->where('ws.user_id', $user_id)
                                        ->where('ws.rank', $best_rank)
                                        ->select('w.play_week_num')
@@ -145,10 +151,13 @@ class HomeController extends Controller
                                           ->get();
         // return $latest_week_scores;
         $high_score = Weeklyscores::where('user_id', $user_id)
+                                  ->whereHas('week.season', function($q) {$q->where('current', 1);})
                                   ->where('active', 1)
                                   ->max('tot_pts_won');
         $high_score_weeks = Weeklyscores::from('weekly_scores AS ws')
                                         ->join('weeks AS w', 'w.id', '=', 'ws.week_id')
+                                        ->join('seasons AS s', 's.id', '=', 'w.season_id')
+                                        ->where('s.current', 1)
                                         ->where('ws.user_id', $user_id)
                                         ->where('ws.tot_pts_won', $high_score)
                                         ->select('w.play_week_num')

@@ -31,8 +31,8 @@
 
     @foreach ($posts as $post)
     <div class="row forum-post">
-        <div class="col-md-auto"><strong>{{ $post->user->name }}</strong> <small>({{ \Carbon\Carbon::createFromTimeStamp(strtotime($post->created_date))->diffForHumans() }})</small>&nbsp;&nbsp;</div>
-        <div class="col">{!! nl2br($post->post) !!}</div>
+        <div class="col-md-3"><strong>{{ $post->user->name }}</strong> <small>({{ \Carbon\Carbon::createFromTimeStamp(strtotime($post->created_date))->diffForHumans() }})</small>&nbsp;&nbsp;</div>
+        <div class="col-md-9">{!! nl2br($post->post) !!}</div>
     </div>
     @endforeach
 
