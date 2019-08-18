@@ -186,6 +186,7 @@ class HomeController extends Controller
             'league' => $league,
             'my_league_pos' => $my_league_pos,
             'my_tot_points' => $my_tot_points,
+            'latest_completed_week_id' => $latest_completed_week_id,
             'latest_completed_week_num' => $latest_completed_week_num,
             'latest_week_scores' => $latest_week_scores,
             'high_score' => $high_score,

@@ -1,7 +1,7 @@
 <div id="home-rh-table-week" class="col-md-12 home-rh-table">
     <div class="sb-table-inner-div">
         <h3>Week {{ $latest_completed_week_num }} table</h3>
-        <em><a href="/weekly-scores/{{ $latest_completed_week_num }}">Click here for full table</a></em>
+        <em><a href="/weekly-scores/{{ $latest_completed_week_id }}">Click here for full table</a></em>
         <table id="home-league-table" class="table table-sm">
             <thead>
                 <tr>
