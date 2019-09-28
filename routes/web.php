@@ -28,6 +28,9 @@ Route::resource('poll', 'PollController');
 //pages
 Route::get('weekly-scores/{week}', 'WeeklyscoresController@show');
 
+// Route::get('potm', 'PotmController@index');
+Route::get('potm/{season}/{month}', 'PotmController@show');
+
 Route::get('/how', function () {
     return view('pages.how');
 });
