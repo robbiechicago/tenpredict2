@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Week;
+use App\Season;
+use App\Weeklyscores;
 use App\Traits\LeagueTrait;
 
 class PotmController extends Controller
@@ -16,7 +19,13 @@ class PotmController extends Controller
      */
     public function index()
     {
-        //
+        //GET LATEST MONTH
+        $latest_completed_week_id = Weeklyscores::max('week_id');
+        $season_id = Week::where('id', $latest_completed_week_id)->value('season_id');
+        $season = Season::where('id', $season_id)->value('season');
+        $latest_month = Week::where('id', $latest_completed_week_id)->value('month');
+
+        return redirect('/potm/' . $season . '/' . $latest_month);
     }
 
     /**
@@ -50,8 +59,25 @@ class PotmController extends Controller
     {
         $totScores = $this->get_potm_positions($season, $month);
 
-        return view('league.index', [
-            'totScores' => $totScores
+        $months = [
+            'jan' => 'January',
+            'feb' => 'February',
+            'mar' => 'March',
+            'apr' => 'April',
+            'may' => 'May',
+            'jun' => 'June',
+            'jul' => 'July',
+            'aug' => 'August',
+            'sep' => 'September',
+            'oct' => 'October',
+            'nov' => 'November',
+            'dec' => 'December',
+        ];
+
+        return view('potm', [
+            'totScores' => $totScores,
+            'month' => $month,
+            'months' => $months,
         ]);
     }
 

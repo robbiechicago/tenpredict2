@@ -1,15 +1,19 @@
 <div class="col-md-12 pred-table-container">
     <div class="pred-table-inner-div">
-        <table id="home-weeks-table" class="table table-striped table-bordered">
+        <table id="home-weeks-table" class="table table-bordered">
             <thead>
                 <tr>
                     <th scope="col">Week</th>
                     <th scope="col">My Predictions</th>
                     <th scope="col">My Score</th>
                     <th scope="col">Winner</th>
+                    <th scope="col">PotM</th>
                 </tr>
             </thead>
             <tbody>
+                @php
+                    $month = '';    
+                @endphp
                 @foreach ($weeks as $week)
                     @php
                         $now = date('Y-m-d H:i:s');
@@ -28,6 +32,12 @@
                         <td><a href="season/{{ $week->season->season }}/week/{{ $week->play_week_num }}/predictions">{{ $predictText }}</a></td>
                         <td><a href="weekly-scores/{{ $week->id }}">{{ $weeklyScoresText }}</a></td>
                         <td><a href="weekly-scores/{{ $week->id }}">{{ $winnerText }}</a></td>
+                        @if ($week->month != $month)
+                            @php
+                                $month = $week->month;
+                            @endphp
+                            <td rowspan="{{ $monthweeks[$week->month] }}"><a href="/potm/{{ $week->season->season }}/{{ $week->month }}">{{ $months[$week->month] }}</a></td>
+                        @endif
                     </tr>
                 @endforeach
             </tbody>

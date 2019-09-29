@@ -42,13 +42,42 @@ class HomeController extends Controller
 
         $season_id = Season::where('current',1)->value('id');
 
-        $weeks = Week::with(['games.predictions' => function($query) {
-            $user_id = Auth::user()->id; //dont think this can be removed, despite the duplication (scope)
-            // $user_id = 10;
+        $weeks = Week::with(['games.predictions' => function($query) use($user_id) {
             $query->where('predictions.user_id', $user_id);
         }])->where('season_id', $season_id)->whereHas('games')->orderBy('play_week_num', 'DESC')->get();
 
         // return $weeks;
+
+        //GET NUM WEEKS IN MONTH FOR TABLE ROWSPAN
+        $monthweeks = [];
+        $month = '';
+        foreach ($weeks as $week) {
+            if ($week->month != $month) {
+                if ($month != '') {
+                    $monthweeks[$month] = $num_weeks;
+                }
+                $month = $week->month;
+                $num_weeks = 1;
+            } else {
+                $num_weeks ++;
+            }
+        }
+        $monthweeks[$month] = $num_weeks;
+        
+        $months = [
+            'jan' => 'January',
+            'feb' => 'February',
+            'mar' => 'March',
+            'apr' => 'April',
+            'may' => 'May',
+            'jun' => 'June',
+            'jul' => 'July',
+            'aug' => 'August',
+            'sep' => 'September',
+            'oct' => 'October',
+            'nov' => 'November',
+            'dec' => 'December',
+        ];
 
         $num_predictions = array();
         $last_game_datetimes = array();
@@ -178,6 +207,8 @@ class HomeController extends Controller
 
         // return $weeklyScores;
 
+        // return $weeks;
+
         return view('home',[
             'weeks' => $weeks,
             'num_predictions' => $num_predictions,
@@ -196,6 +227,8 @@ class HomeController extends Controller
             'best_weeks_string' => $best_weeks_string,
             'best_week_s' => $best_week_s,
             'poll' => $poll,
+            'monthweeks' => $monthweeks,
+            'months' => $months,
         ]);
     }
 }
