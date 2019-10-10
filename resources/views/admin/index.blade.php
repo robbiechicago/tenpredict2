@@ -3,7 +3,7 @@
 @section('content')
 <div class="container-fluid">
 
-    <h1>Admin</h1>
+    <h1>Admin Page, Bitches!</h1>
 
     <a href="admin/add_weekly_score_rank/" class="btn btn-warning btn-sm">ranker</a>
 
