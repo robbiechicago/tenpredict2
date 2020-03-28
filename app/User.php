@@ -38,4 +38,9 @@ class User extends Authenticatable
     public function pollvotes() {
         return $this->hasMany('App\PollVotes');
     }
+
+    public function sd_picks()
+    {
+        return $this->hasMany('App\SuddenDeathPicks');
+    }
 }

@@ -10,6 +10,7 @@ use App\Season;
 use App\Week;
 use App\Game;
 use App\Poll;
+use App\User;
 use App\Weeklyscores;
 use Auth;
 
@@ -39,6 +40,9 @@ class HomeController extends Controller
     {
         $user_id = Auth::user()->id;
         // $user_id = 10;
+
+        $user = User::with('sd_picks')->find($user_id);
+        return $user;
 
         $season_id = Season::where('current',1)->value('id');
 
