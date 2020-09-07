@@ -70,13 +70,13 @@ class RegisterController extends Controller
         ]);
     }
 
-    public function showRegistrationForm()
-    {
+//    public function showRegistrationForm()
+//    {
 //        return redirect('login');
-    }
+//    }
 
-    public function register()
-    {
-
-    }
+//    public function register()
+//    {
+//
+//    }
 }
